@@ -1,4 +1,3 @@
-# Elzawhips
 <!doctype html>
 <html lang="id">
 <head>
@@ -66,7 +65,7 @@
     transition: transform .18s;
   }
   .card:hover{ transform: translateY(-6px); }
-  .imgwrap{ display:block; height:180px; overflow:hidden; }
+  .imgwrap{ display:block; height:180px; overflow:hidden; background: linear-gradient(135deg, #ffeae3, #f5e6dd); position:relative; }
   .imgwrap img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .35s; }
   .card:hover .imgwrap img{ transform: scale(1.05); }
   .card-body{ padding:12px; text-align:center; }
@@ -79,6 +78,7 @@
     padding:8px 12px; border-radius:10px; border:none; cursor:pointer; font-weight:600;
     background: linear-gradient(180deg,var(--pink), #ffb6c1); color:white; box-shadow:0 8px 18px rgba(246,215,219,0.35);
   }
+  .btn:hover{ transform: scale(1.05); transition: all 0.2s; }
   .btn.secondary{ background:transparent; color:var(--accent); border:1px solid rgba(139,94,60,0.12); box-shadow:none; }
 
   .cart-bar{
@@ -96,6 +96,7 @@
 
   .cart-footer{ display:flex; justify-content:space-between; align-items:center; gap:8px; }
   .checkout{ padding:8px 10px; border-radius:10px; background:var(--coksu); color:white; border:none; font-weight:700; cursor:pointer; }
+  .checkout:hover{ transform: scale(1.05); transition: all 0.2s; }
 
   footer{ text-align:center; margin-top:26px; color:#8b5e3c; font-size:14px; }
 
@@ -151,38 +152,35 @@ const products = [
     name:'Strawberry Whip Sundae',
     desc:'Es krim stroberi lembut dengan whipped cream dan sprinkles. Varian pastel terfavorit!',
     price:18000,
-    // Gambar Sundae Stroberi yang Aesthetic
-    img:'https://images.unsplash.com/photo-1549419163-f018e6146c98?q=80&w=1200&auto=format&fit=crop' 
+    img:'https://i.ibb.co/Rkmp4MpQ/45e868b1a51de3f842feebd9ca4a0070.jpg'
   },
   {
     id:'2',
     name:'Choco Crunch Cookie',
     desc:'Cookie cokelat hangat dengan choco chip lumer. Hangat, lembut, dan meleleh di mulut! 🍪',
     price:20000,
-    // Gambar Cookie Cokelat
-    img:'https://images.unsplash.com/photo-1558299863-c79234812328?q=80&w=1200&auto=format&fit=crop' 
+    img:'https://i.ibb.co/pBnqvRxj/6fa212044776edcbc44b34687fc6e8e4.jpg'
   },
   {
     id:'3',
     name:'Vanilla Dream Puff',
     desc:'Puff vanilla lembut dengan sirup karamel manis. Diisi dengan krim vanila manis ringan. 🍯',
     price:22000,
-    // Gambar Cream Puff/Eclair
-    img:'https://images.unsplash.com/photo-1621939106297-759247d0e49f?q=80&w=1200&auto=format&fit=crop' 
+    img:'https://i.ibb.co/prkC7z3m/d4f83b0fa24e25c4f2d659d25258c763.jpg'
   },
   {
     id:'4',
     name:'Matcha Cloud Ice Cream',
     desc:'Es krim matcha halus dengan topping mochi dan white choco. Rasa Matcha yang creamy dan menenangkan. 🍵',
     price:23000,
-    // Gambar Matcha Ice Cream / Dessert Hijau Pastel
-    img:'https://images.unsplash.com/photo-1551745455-89b52a7c4193?q=80&w=1200&auto=format&fit=crop' 
+    img:'https://i.ibb.co/Ps19RBLX/89a56ba9ce5ab11185a1878e5e185226.jpg'
   }
 ];
 
 const menu=document.getElementById('menu');
 function formatRp(n){return new Intl.NumberFormat('id-ID').format(n)}
 let cart={};
+
 function updateCartUI(){
   const list=document.getElementById('cartList');
   const totalEl=document.getElementById('totalPrice');
@@ -193,7 +191,7 @@ function updateCartUI(){
     const q=cart[id]; total+=p.price*q; count+=q;
     const item=document.createElement('div');
     item.className='cart-item';
-    item.innerHTML=`<img src="${p.img}" alt="">
+    item.innerHTML=`<img src="${p.img}" alt="${p.name}">
     <div class="meta"><div class="n">${p.name}</div><div>Rp ${formatRp(p.price)} × ${q}</div></div>
     <div class="qty">${q}</div>`;
     list.appendChild(item);
@@ -206,7 +204,9 @@ products.forEach(p=>{
   const div=document.createElement('div');
   div.className='card';
   div.innerHTML=`
-  <a class="imgwrap" href="#"><img src="${p.img}" alt="${p.name}"></a>
+  <a class="imgwrap" href="#">
+    <img src="${p.img}" alt="${p.name}">
+  </a>
   <div class="card-body">
   <div class="title">${p.name}</div>
   <div class="desc">${p.desc}</div>
@@ -215,6 +215,7 @@ products.forEach(p=>{
   </div>`;
   menu.appendChild(div);
 });
+
 function addCart(id){cart[id]=(cart[id]||0)+1;updateCartUI();}
 document.getElementById('clearCart').onclick=()=>{cart={};updateCartUI();}
 document.getElementById('checkoutBtn').onclick=()=>{
